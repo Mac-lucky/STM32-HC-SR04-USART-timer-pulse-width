@@ -64,21 +64,19 @@ static void MX_USART2_UART_Init(void);
 void delay (uint16_t time)					//delay function in us
 {
 	__HAL_TIM_SET_COUNTER(&htim1, 0);
-	while (__HAL_TIM_GET_COUNTER (&htim1) < time);			//
+	while (__HAL_TIM_GET_COUNTER (&htim1) < time);	 //
 }
 
 
 uint32_t firstValue = 0;
 uint32_t secondValue = 0;
-uint32_t sub = 0;
+uint32_t sub = 0;			//subtract value
 uint8_t capturedOne = 0;
 uint8_t distance  = 0;
 char uartBuf[100];			//used as buffer for the string to be send to PC
 
 #define TRIG_PIN GPIO_PIN_8
 #define TRIG_PORT GPIOA
-
-// Let's write the callback function
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
