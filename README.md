@@ -4,6 +4,7 @@
 First we need to prepare our board in STM32CubeMX. It should work for every STM32.
 
 Enable the TIM1 as you can see on the picture below and set Channel1 to Input capture direct mode and enable TIM1 capture compare interrupt in NVIC settings tab.
+Set the clock to Internal Clock.
 
 ![alt text](https://github.com/Mac-lucky/STM32-HC-SR04-USART-timer-pulse-width/blob/main/images/interr.png?raw=true)
 
