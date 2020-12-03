@@ -80,7 +80,7 @@ char uartBuf[100];			//used as buffer for the string to be send to PC
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
-	if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)  // if channel 1 is interrupted
+	if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)
 	{
 		if (capturedOne==0) // check if first value is captured
 		{
@@ -100,7 +100,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 			capturedOne = 0; 					// set the capture value to 0
 
 			__HAL_TIM_SET_CAPTUREPOLARITY(htim, TIM_CHANNEL_1, TIM_INPUTCHANNELPOLARITY_RISING);  //change the polarity back to rising edge
-			__HAL_TIM_DISABLE_IT(&htim1, TIM_IT_CC1);											//disable the interrupt
+			__HAL_TIM_DISABLE_IT(&htim1, TIM_IT_CC1);											//disable the TIM1 interrupt
 		}
 	}
 }
@@ -111,7 +111,7 @@ void HCSR04_Read (void)
 	delay(10);  // wait for 10 us
 	HAL_GPIO_WritePin(TRIG_PORT, TRIG_PIN, GPIO_PIN_RESET);  // TRIG set to LOW
 
-	__HAL_TIM_ENABLE_IT(&htim1, TIM_IT_CC1);				//Enable timer
+	__HAL_TIM_ENABLE_IT(&htim1, TIM_IT_CC1);				//Enable timer interrupt
 }
 
 /* USER CODE END 0 */
@@ -148,7 +148,7 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_1);
+  HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_1);	//Enable timer interrupt
 
   /* USER CODE END 2 */
 
@@ -156,12 +156,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
 	  HCSR04_Read();				//read the value
 	  sprintf(uartBuf, "Distance (cm)  = %.1d\r\n", distance);			//convert to string
-	  		HAL_UART_Transmit(&huart2, (uint8_t *)uartBuf, strlen(uartBuf), 100);		//transfer the string to PC
+	  		HAL_UART_Transmit(&huart2, (uint8_t *)uartBuf, strlen(uartBuf), 100);		//transfer the string to PC // (interface, address, buffer size, timeout)
 	  		HAL_Delay(1000);		//delay 1s
-    /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }
