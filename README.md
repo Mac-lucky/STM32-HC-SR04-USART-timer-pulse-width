@@ -104,6 +104,7 @@ void HCSR04_Read (void)
 
 /* USER CODE END 0 */
 ```
+* Write the loop code to read the width of the pulse convert to centimeters and send to PC via Usart
 
 ```C
 /* Infinite loop */
